@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="spinner-border mt-10" role="status" *ngIf="loader">
+        <span class="sr-only"></span>
+      </div>
+    <table class="table table-bordered mt-10" *ngIf="!loader">
+    
+    
+        <tbody *ngIf="!apiFailed">
+          
+          <tr *ngFor="let obj of featurLIst">
+           
+            <td><img src="{{obj.teams.away.logo}}" height="40" width="40"></td>
+            <td>{{obj.teams.away.name}}</td>
+            <td>{{obj.goals.away}}</td>
+            <td>-</td>
+            <td>{{obj.goals.home}}</td>
+            <td>{{obj.teams.home.name}}</td>
+            <td><img src="{{obj.teams.home.logo}}" height="40" width="40"></td>
+          </tr>
+         
+        
+        </tbody>
+        <tbody *ngIf="apiFailed">
+          <tr>
+            <td colspan="9">No Record Found</td>
+          
+          </tr>
+         
+         
+        
+        </tbody>
+      </table>
+      <a class="btn btn-primary mb-10" (click)="back()">Back</a>
+</div>
+
+ 
