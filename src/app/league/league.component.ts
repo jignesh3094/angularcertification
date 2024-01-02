@@ -42,7 +42,6 @@ export class LeagueComponent implements OnInit,OnDestroy {
      this.setLeagueResponse(res);
   } else {
     this.leagueSubscription = this.dataService.getLeaguesData(selctedCountry).subscribe((res)=> {
-       localStorage.setItem('leagueData',JSON.stringify(res));
        this.setLeagueResponse(res);
      })
   }
@@ -55,7 +54,8 @@ export class LeagueComponent implements OnInit,OnDestroy {
       this.error = res.errors;
     }
     if(res && res.response && res.response.length > 0 && res.response[0].league && res.response[0].league.standings && res.response[0].league.standings.length > 0) {
-        this.apiFailed = false;
+      localStorage.setItem('leagueData',JSON.stringify(res));  
+      this.apiFailed = false;
         this.leagueList  = res.response[0].league.standings[0];
       } else if(this.error.requests) {
         localStorage.removeItem('leagueData');
