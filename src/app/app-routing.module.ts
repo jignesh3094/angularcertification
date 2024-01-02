@@ -7,12 +7,13 @@ const routes: Routes = [
   {
     path: '',
     component: HeaderComponent,
+    
     children: [
       {
         path: '',
-        loadChildren: () => import('./league/league.module').then(m=>m.LeagueModule) 
+        loadChildren: () => import('./league/league.module').then(m=>m.LeagueModule),
+        pathMatch: 'full',
       },
-
     ],
    
  },

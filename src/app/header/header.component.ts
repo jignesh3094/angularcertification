@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { SelectedCountryData } from './../shared/leagueModel';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { DataService } from '../shared/data.service';
+import { SelectedCountryData } from '../shared/league.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
+  countrySubsription = new Subscription;
   countryData = [
     {
       'name': 'England',
@@ -36,15 +39,34 @@ export class HeaderComponent implements OnInit {
     }
   ]
   selectedCountry: string = 'england';
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {
+    
+   }
 
   ngOnInit(): void {
-      this.changeCountry(this.countryData[0]);
+    this.countrySubsription = this.dataService.selectedCounty.subscribe(res => { 
+      if(res) {
+        this.selectedCountry = res.id;
+      } else {
+        this.changeCountry(this.countryData[0]);
+      }
+    })
+    
   }
 
   changeCountry(obj:SelectedCountryData) {
+      localStorage.removeItem('leagueData');
       this.selectedCountry = obj.id;
       this.dataService.setSelectedCountry(obj);
   }
+
+  ngOnDestroy() {
+    
+    if(this.countrySubsription) {
+      this.countrySubsription.unsubscribe();
+    }
+  
+  }
+
 
 }

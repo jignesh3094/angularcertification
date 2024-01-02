@@ -18,15 +18,16 @@
     
     <tbody *ngIf="!apiFailed">
       <tr *ngFor="let obj of leagueList">
+
         <td>{{obj.rank}}</td>
-        <td><img src="{{obj.logo}}" height="40" width="40"></td>
-        <td><a class="cursor" (click)="teamClick(obj)">{{obj.name}}</a></td>
-        <td>{{obj.played}}</td>
-        <td>{{obj.win}}</td>
-        <td>{{obj.lose}}</td>
-        <td>{{obj.draw}}</td>
+        <td><img src="{{obj.team.logo}}" height="40" width="40"></td>
+        <td><a class="cursor"  [ngClass]="obj.team.id==selectedTeam ? 'active':''" (click)="teamClick(obj.team)">{{obj.team.name}}</a></td>
+        <td>{{obj.all.played}}</td>
+        <td>{{obj.all.win}}</td>
+        <td>{{obj.all.lose}}</td>
+        <td>{{obj.all.draw}}</td>
         <td>{{obj.goalsDiff}}</td>
-        <td>{{obj.points}}</td>
+        <td>{{obj.points}}</td> 
       </tr>
      
      

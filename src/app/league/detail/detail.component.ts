@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../shared/data.service';
 import { Observable,Subscription} from 'rxjs';
-import { FixureData, FixureModel } from '../../shared/leagueModel';
+import { ErrorData, FixureData, ResponseEntity } from '../../shared/fexure.interface';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +16,8 @@ export class DetailComponent implements OnInit {
   fexureSubsription = new Subscription;
   apiFailed:  boolean = false;
   loader: boolean = true;
-  featurLIst: FixureModel[] = [];
+  error!: ErrorData;
+  featurLIst!: (ResponseEntity)[] | null
   id: string | undefined | null;
 
 constructor(private toastr: ToastrService,private router: Router,private dataService: DataService,private routerData: ActivatedRoute) {
@@ -32,20 +33,23 @@ constructor(private toastr: ToastrService,private router: Router,private dataSer
 
 
   getFixtureData(fixureData: FixureData) {
-    this.fexureSubsription = this.dataService.getFixturesData(fixureData).subscribe(res=> {
+    this.fexureSubsription = this.dataService.getFixturesData(fixureData).subscribe((res)=> {
      this.loader = false;
+     if(res.errors) {
+      this.error = res.errors;
+     }
       if(res && res.response && res.response.length > 0) {
         this.apiFailed = false;
-        this.featurLIst  = new Array<FixureModel>();
-        for(let i = 0; i<res.response.length; i++) {
-          this.featurLIst.push(res.response[i]);
-            
-        }
+        this.featurLIst  = res.response
       }
-      else if (res.errors && res.errors.requests) {
+      else if(this.error.request) {
+        this.toastr.error('Error!',this.error.request);
         this.apiFailed = true;
-        this.toastr.error('Error!',res.errors.requests);
+      } else {
+        this.toastr.error('Error!',this.error.access);
+        this.apiFailed = true;
       }
+    
     })
   }
 
