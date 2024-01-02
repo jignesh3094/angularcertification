@@ -21,7 +21,7 @@ export class DataService {
         league: requestObj.leagueId,
         season: 2023
        }
-       return this.http.get<LeagueModeData>(environment.apiBaseUrl+"/standings",{params: obj})
+       return this.http.get<LeagueModeData>(environment.apiBaseUrl+"standings",{params: obj})
       }
 
       getFixturesData(requestObj:FixureData): Observable<Fexure>  {
@@ -30,7 +30,7 @@ export class DataService {
           team: requestObj.id,
           last: 10
          }
-          return this.http.get<Fexure>(environment.apiBaseUrl+"/fixtures",{params: obj})
+          return this.http.get<Fexure>(environment.apiBaseUrl+"fixtures",{params: obj})
       }
 
 
