@@ -58,9 +58,11 @@ export class LeagueComponent implements OnInit,OnDestroy {
         this.apiFailed = false;
         this.leagueList  = res.response[0].league.standings[0];
       } else if(this.error.requests) {
+        localStorage.removeItem('leagueData');
         this.toastr.error('Error!',this.error.requests);
         this.apiFailed = true;
       }else {
+        localStorage.removeItem('leagueData');
         this.toastr.error('Error!',this.error.access);
         this.apiFailed = true;
       }
