@@ -14,7 +14,7 @@ export interface LeagueModeData {
     response?: (ResponseEntity)[] | null;
   }
   export interface ErrorData{
-    request: string;
+    requests: string;
     access:string;
   }
   export interface Parameters {
