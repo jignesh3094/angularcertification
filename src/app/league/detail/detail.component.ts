@@ -43,14 +43,17 @@ constructor(private toastr: ToastrService,private router: Router,private dataSer
         this.featurLIst  = res.response
       }
       else if(this.error.requests) {
-        this.toastr.error('Error!',this.error.requests);
-        this.apiFailed = true;
+        this.setErrors(this.error.requests)
       } else {
-        this.toastr.error('Error!',this.error.access);
-        this.apiFailed = true;
+        this.setErrors(this.error.access)
       }
     
     })
+  }
+
+  setErrors(error:string) {
+    this.toastr.error('Error!',error);
+    this.apiFailed = true;
   }
 
   back() {

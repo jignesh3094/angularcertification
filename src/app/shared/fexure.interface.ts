@@ -4,7 +4,7 @@ export interface FixureData {
     last:  number;
 }
 
-export interface Fexure {
+export interface Fixure {
   get: string;
   
   parameters: Parameters;

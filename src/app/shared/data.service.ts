@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LeagueModeData, SelectedCountryData } from './league.interface';
-import { Fexure, FixureData } from './fexure.interface';
+import { Fixure, FixureData } from './fexure.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +24,13 @@ export class DataService {
        return this.http.get<LeagueModeData>(environment.apiBaseUrl+"standings",{params: obj})
       }
 
-      getFixturesData(requestObj:FixureData): Observable<Fexure>  {
+      getFixturesData(requestObj:FixureData): Observable<Fixure>  {
 
         let obj:{} = {
           team: requestObj.id,
           last: 10
          }
-          return this.http.get<Fexure>(environment.apiBaseUrl+"fixtures",{params: obj})
+          return this.http.get<Fixure>(environment.apiBaseUrl+"fixtures",{params: obj})
       }
 
 
