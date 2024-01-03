@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../../shared/data.service';
 import { Observable,Subscription} from 'rxjs';
 import { ErrorData, FixureData, ResponseEntity } from '../../shared/fexure.interface';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit,OnDestroy {
   countrySubsription = new Subscription;
   fexureSubsription = new Subscription;
   apiFailed:  boolean = false;
@@ -26,9 +26,6 @@ constructor(private toastr: ToastrService,private router: Router,private dataSer
    }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy() {
   }
 
 
@@ -60,14 +57,10 @@ constructor(private toastr: ToastrService,private router: Router,private dataSer
     this.router.navigate(['/']);
   }
 
-  ngOnDesctory() {
+  ngOnDestroy() {
     if(this.fexureSubsription) {
       this.fexureSubsription.unsubscribe();
-    }
-    if(this.countrySubsription) {
-      this.countrySubsription.unsubscribe();
-    }
-  
+    }  
   }
 
 }
